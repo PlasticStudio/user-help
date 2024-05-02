@@ -26,28 +26,8 @@
     "extra": {
         "expose": [
             "client/dist"
-        ],
-        "project-files-installed": [
-            ".htaccess",
-            "app/.htaccess",
-            "app/_config/mimevalidator.yml",
-            "app/_config/mysite.yml",
-            "app/src/Page.php",
-            "app/src/PageController.php"
-        ],
-        "public-files-installed": [
-            ".htaccess",
-            "index.php",
-            "web.config"
         ]
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "allow-plugins": {
-            "composer/installers": true,
-            "silverstripe/recipe-plugin": true,
-            "silverstripe/vendor-plugin": true
-        }
-    }
+    "prefer-stable": true
 }
