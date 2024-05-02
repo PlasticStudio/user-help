@@ -52,9 +52,7 @@ class HelpContentItem extends DataObject
         $content = $this->Content;
         if (!empty($content)) {
             $text = strip_tags($content);
-            // remove consecutive spaces and newlines
             $text = preg_replace('/\s+/', ' ', $text);
-
             $length = 30;
             return mb_strimwidth($text, 0, $length, '...');
         }
