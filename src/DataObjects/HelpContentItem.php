@@ -49,8 +49,12 @@ class HelpContentItem extends DataObject
 
     public function getExcerpt()
     {
-        $text = strip_tags($this->Content);
-        $length = 30;
-        return mb_strimwidth($text, 0, $length, '...');
+        $content = $this->Content;
+        if (!empty($content)) {
+            $text = strip_tags($content);
+            $length = 30;
+            return mb_strimwidth($text, 0, $length, '...');
+        }
+        return '';
     }
 }
