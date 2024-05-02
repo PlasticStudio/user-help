@@ -47,7 +47,7 @@ class HelpContentItem extends DataObject
         return $fields;
     }
 
-    private static function getExcerpt()
+    public function getExcerpt()
     {
         $text = strip_tags($this->Content);
         $length = 30;
