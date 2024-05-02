@@ -30,7 +30,10 @@ class HelpContentItem extends DataObject
 
     private static array $owns = [];
 
-    private static array $summary_fields = [];
+    private static array $summary_fields = [
+        'Title' => 'Title',
+        'Excerpt' => 'Excerpt'
+    ];
 
     public function getCMSFields()
     {
@@ -42,5 +45,12 @@ class HelpContentItem extends DataObject
         ]);
 
         return $fields;
+    }
+
+    private static function getExcerpt()
+    {
+        $text = strip_tags($this->Content);
+        $length = 30;
+        return mb_strimwidth($text, 0, $length, '...');
     }
 }
