@@ -4,7 +4,7 @@ namespace PlasticStudio\UserHelp\Admin;
 
 use SilverStripe\Admin\ModelAdmin;
 use PlasticStudio\UserHelp\DataObjects\HelpContentItem;
-use Symbiote\GridFieldExtensions\GridFieldSortableRows;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 class HelpContentAdmin extends ModelAdmin
 {
@@ -26,7 +26,7 @@ class HelpContentAdmin extends ModelAdmin
         $gridField = $form->Fields()->dataFieldByName($gridFieldName);
         if ($gridField) {
             $config = $gridField->getConfig();
-            $config->addComponent(new GridFieldSortableRows('SortOrder'));
+            $config->addComponent(new GridFieldOrderableRows('SortOrder'));
         }
         return $form;
     }
