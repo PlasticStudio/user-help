@@ -20,6 +20,9 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Tab;
 use SilverStripe\Forms\TabSet;
 use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldConfig_Base;
 
 class HelpSidebarExtension extends LeftAndMain
 {
@@ -39,8 +42,6 @@ class HelpSidebarExtension extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null)
     {
-
-
         // Create the main tab set
         $tabs = TabSet::create(
             'Root',
