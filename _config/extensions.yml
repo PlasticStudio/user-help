@@ -1,3 +1,7 @@
 SilverStripe\CMS\Model\SiteTree:
   extensions:
     - PlasticStudio\UserHelp\Extensions\PageExtension
+
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - PlasticStudio\UserHelp\Extensions\HelpSidebarExtension
