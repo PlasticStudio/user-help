@@ -45,16 +45,18 @@ class PageExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->addFieldsToTab('Root.Help', [
-            LiteralField::create(
-                'HelpTitleDisplay',
-                '<h3>' . ($this->owner->HelpTitle ?: 'No Help Title set') . '</h3>'
-            ),
-            LiteralField::create(
-                'HelpTextDisplay',
-                '<p>' . nl2br($this->owner->HelpText) . '</p>'
-            )
-        ]);
+        if (!empty($this->owner->HelpText)) {
+            $fields->addFieldsToTab('Root.Help', [
+                LiteralField::create(
+                    'HelpTitleDisplay',
+                    '<h3>' . ($this->owner->HelpTitle ?: 'No Help Title set') . '</h3>'
+                ),
+                LiteralField::create(
+                    'HelpTextDisplay',
+                    '<p>' . nl2br($this->owner->HelpText) . '</p>'
+                )
+            ]);
+        }
         return $fields;
     }
 }

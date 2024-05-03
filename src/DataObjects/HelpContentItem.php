@@ -16,22 +16,24 @@ class HelpContentItem extends DataObject
     private static string $description = 'A single help content item';
 
     private static array $db = [
-        'Title' => 'Varchar(255)',
+        'HelpTitle' => 'Varchar(255)',
+        'HelpText' => 'HTMLText',
         'FromRepo' => 'Boolean',
-        'Content' => 'HTMLText',
         'SortOrder' => 'Int',
     ];
 
     private static array $has_one = [];
 
-    // private static array $has_many $many_many = [
-    //     'RelevantPages' => SiteTree::class
+    // private static array $many_many = [
+    // TODO: RelevantPages
+    // TODO: RelevantElements
+    // TODO: RelevantDataObjects
     // ];
 
     private static array $owns = [];
 
     private static array $summary_fields = [
-        'Title' => 'Title',
+        'HelpTitle' => 'Title',
         'Excerpt' => 'Excerpt'
     ];
 
@@ -49,11 +51,11 @@ class HelpContentItem extends DataObject
 
     public function getExcerpt()
     {
-        $content = $this->Content;
+        $content = $this->HelpText;
         if (!empty($content)) {
             $text = strip_tags($content);
             $text = preg_replace('/\s+/', ' ', $text);
-            $length = 30;
+            $length = 100;
             return mb_strimwidth($text, 0, $length, '...');
         }
         return '';
