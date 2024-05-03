@@ -20,7 +20,7 @@ use SilverStripe\Forms\FieldList;
 
 use SilverStripe\SiteConfig\SiteConfig;
 
-class HelpSidebarExtension extends Extension
+class HelpSidebarExtension extends LeftAndMain
 {
     private static $url_segment = 'helphelphelphelp';
 
