@@ -6,13 +6,8 @@ use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\LiteralField;
 
-class HelpSidebarExtension extends LeftAndMain
+class HelpSidebarExtension extends Extension
 {
-    public static $url_segment = 'help-admin';
-    public static $url_priority = 60;
-    public static $menu_title = 'Edit Public Register';
-    public static $tree_class = 'PublicRegister';
-
     public function init()
     {
         parent::init();
