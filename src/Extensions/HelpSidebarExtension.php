@@ -28,13 +28,13 @@ use SilverStripe\Forms\GridField\GridFieldConfig;
 
 class HelpSidebarExtension extends LeftAndMain
 {
-    private static $url_segment = 'helphelphelphelp';
+    private static $url_segment = 'help';
 
     private static $url_rule = '/$Action/$ID/$OtherID';
 
     private static $menu_priority = -1;
 
-    private static $menu_title = 'helphelphelphelp';
+    private static $menu_title = 'Help';
 
     private static $menu_icon_class = 'font-icon-help-circle';
 
