@@ -40,6 +40,7 @@ class HelpSidebarExtension extends LeftAndMain
 
     // add allowed action
     private static $allowed_actions = array(
+        'handleItem',
         'EditHelpForm'
     );
 
@@ -98,5 +99,10 @@ class HelpSidebarExtension extends LeftAndMain
         }
 
         return $html;
+    }
+
+    public function handleItem($request)
+    {
+        return $this->getEditForm()->Fields()->dataFieldByName('HelpContentItems')->handleRequest($request, DataModel::inst());
     }
 }
