@@ -14,7 +14,14 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 class HelpContentAdmin extends ModelAdmin
 {
     private static $managed_models = [
-        HelpContentItem::class
+        'help' => [
+            'dataClass' => HelpContentItem::class,
+            'title' => 'Help',
+        ],
+        'edit-help' => [
+            'dataClass' => HelpContentItem::class,
+            'title' => 'Edit',
+        ],
     ];
 
     private static $url_segment = 'help-content';
@@ -28,32 +35,33 @@ class HelpContentAdmin extends ModelAdmin
         $form = parent::getEditForm($id, $fields);
 
         // Add sortable helpcontentitems
-        $model = singleton(HelpContentItem::class);
-        $gridFieldName = $this->sanitiseClassName($model->ClassName);
-        $gridField = $form->Fields()->dataFieldByName($gridFieldName);
-        if ($gridField) {
-            $config = $gridField->getConfig();
-            $config->addComponent(new GridFieldOrderableRows('SortOrder'));
+        // $model = singleton(HelpContentItem::class);
+        // $gridFieldName = $this->sanitiseClassName($model->ClassName);
+        // $gridField = $form->Fields()->dataFieldByName($gridFieldName);
+        // if ($gridField) {
+        //     $config = $gridField->getConfig();
+        //     $config->addComponent(new GridFieldOrderableRows('SortOrder'));
+        // }
+
+        $currentModel = $this->modelClass;
+
+        // Handling different behaviors based on the model accessed
+        if ($currentModel == HelpContentItem::class && $this->getRequest()->getVar('ModelClass') == 'help') {
+            // Configurations for the 'Edit Help' tab
+            $gridFieldName = $this->sanitiseClassName($currentModel);
+            $gridField = $form->Fields()->dataFieldByName($gridFieldName);
         }
 
-        // Find or create the Root tab set
-        $rootTabSet = $form->Fields()->fieldByName('Root');
-        if (!$rootTabSet) {
-            $rootTabSet = TabSet::create('Root');
-            $form->Fields()->push($rootTabSet);
+        // Handling different behaviors based on the model accessed
+        if ($currentModel == HelpContentItem::class && $this->getRequest()->getVar('ModelClass') == 'edit-help') {
+            // Configurations for the 'Edit Help' tab
+            $gridFieldName = $this->sanitiseClassName($currentModel);
+            $gridField = $form->Fields()->dataFieldByName($gridFieldName);
+            if ($gridField) {
+                $config = $gridField->getConfig();
+                $config->addComponent(new GridFieldOrderableRows('SortOrder'));
+            }
         }
-
-        // Create a new tab with arbitrary HTML content
-        $helpContent = $this->getHelpContentItems();
-        $htmlTab = Tab::create(
-            'CustomHTML',
-            'Custom HTML',
-            LiteralField::create('HelpContent', $helpContent)
-        );
-
-        // Add the new tab to the root tab set
-        $rootTabSet->push($htmlTab);
-
 
         // Return the modified form
         return $form;
