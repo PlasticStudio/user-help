@@ -38,7 +38,7 @@ class HelpSidebarExtension extends LeftAndMain
 
     public function init()
     {
-        parent::init();
+        // parent::init();
         // if (class_exists(SiteTree::class)) {
         //     Requirements::javascript('silverstripe/cms: client/dist/js/bundle.js');
         // }
