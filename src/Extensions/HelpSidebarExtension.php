@@ -32,17 +32,9 @@ class HelpSidebarExtension extends LeftAndMain
 
     private static $menu_icon_class = 'font-icon-help-circle';
 
-    private static $tree_class = SiteConfig::class;
+    // private static $tree_class = SiteConfig::class;
 
     private static $required_permission_codes = array('EDIT_SITECONFIG');
-
-    public function init()
-    {
-        // parent::init();
-        // if (class_exists(SiteTree::class)) {
-        //     Requirements::javascript('silverstripe/cms: client/dist/js/bundle.js');
-        // }
-    }
 
     public function getEditForm($id = null, $fields = null)
     {
