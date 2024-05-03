@@ -55,12 +55,15 @@ class HelpContentAdmin extends ModelAdmin
         // Handling different behaviors based on the model accessed
         if ($currentModel == HelpContentItem::class && $this->getRequest()->getVar('ModelClass') == 'edit-help') {
             // Configurations for the 'Edit Help' tab
-            $gridFieldName = $this->sanitiseClassName($currentModel);
+
+            $model = singleton(HelpContentItem::class);
+            $gridFieldName = $this->sanitiseClassName($model->ClassName);
             $gridField = $form->Fields()->dataFieldByName($gridFieldName);
             if ($gridField) {
                 $config = $gridField->getConfig();
                 $config->addComponent(new GridFieldOrderableRows('SortOrder'));
             }
+
         }
 
         // Return the modified form
