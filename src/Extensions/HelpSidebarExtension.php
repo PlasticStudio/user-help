@@ -65,7 +65,15 @@ class HelpSidebarExtension extends LeftAndMain
         $tabEdit->push($helpGridField);
 
         // Create the form with these fields
-        $fields = FieldList::create($tabs);
+        $fields = FieldList::create(
+            LiteralField::create(
+                'WrapperStart',
+                '<div class="panel panel--padded panel--scrollable flexbox-area-grow cms-content-fields">'
+            ),
+            $tabs,
+            LiteralField::create('WrapperEnd', '</div>')
+        );
+
         $form = Form::create(
             $this,
             'EditHelpForm',
