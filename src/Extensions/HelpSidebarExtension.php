@@ -2,6 +2,7 @@
 
 namespace PlasticStudio\UserHelp\Extensions;
 
+use PlasticStudio\UserHelp\DataObjects\HelpContentItem;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\LiteralField;
@@ -23,6 +24,7 @@ use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldConfig_Base;
+use SilverStripe\Forms\GridField\GridFieldConfig;
 
 class HelpSidebarExtension extends LeftAndMain
 {
@@ -45,12 +47,12 @@ class HelpSidebarExtension extends LeftAndMain
         // Create the main tab set
         $tabs = TabSet::create(
             'Root',
-            $tabHelp = Tab::create('Help', LiteralField::create('TestingHelp', 'Testing Help!')),
+            $tabHelp = Tab::create('Help', LiteralField::create('HelpContent', $this->renderAllHelpItems())),
             $tabEdit = Tab::create('Edit')
         );
 
         // Create a GridField configured to edit HelpContentItem data objects
-        $helpContentItems = DataObject::get('HelpContentItem'); // Ensure your DataObject class name is correct
+        $helpContentItems = HelpContentItem::get();
         $helpGridFieldConfig = GridFieldConfig_RecordEditor::create();
         $helpGridField = GridField::create(
             'HelpContentItems',
@@ -71,5 +73,17 @@ class HelpSidebarExtension extends LeftAndMain
         );
 
         return $form;
+    }
+
+    public function renderAllHelpItems()
+    {
+        $helpItems = HelpContentItem::get()->sort('SortOrder');
+        $html = '';
+        foreach ($helpItems as $helpItem) {
+            $html .= '<h2>' . $helpItem->HelpTitle . '</h2>';
+            $html .= $helpItem->HelpText;
+        }
+
+        return $html;
     }
 }
