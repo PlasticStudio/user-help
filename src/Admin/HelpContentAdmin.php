@@ -43,7 +43,7 @@ class HelpContentAdmin extends ModelAdmin
         }
 
         // Create a new tab with arbitrary HTML content
-        $helpContent = getHelpContentItems();
+        $helpContent = $this->getHelpContentItems();
         $htmlTab = Tab::create(
             'CustomHTML',
             'Custom HTML',
