@@ -46,16 +46,17 @@ class HelpContentAdmin extends ModelAdmin
         $currentModel = $this->modelClass;
 
         // Handling different behaviors based on the model accessed
-        if ($currentModel == HelpContentItem::class && $this->getRequest()->getVar('ModelClass') == 'help') {
+        if ($this->getRequest()->getVar('ModelClass') == 'help') {
+            // if ($currentModel == HelpContentItem::class && $this->getRequest()->getVar('ModelClass') == 'help') {
             // Configurations for the 'Edit Help' tab
             $gridFieldName = $this->sanitiseClassName($currentModel);
             $gridField = $form->Fields()->dataFieldByName($gridFieldName);
         }
 
         // Handling different behaviors based on the model accessed
-        if ($currentModel == HelpContentItem::class && $this->getRequest()->getVar('ModelClass') == 'edit-help') {
+        if ($this->getRequest()->getVar('ModelClass') == 'edit-help') {
+            // if ($currentModel == HelpContentItem::class && $this->getRequest()->getVar('ModelClass') == 'edit-help') {
             // Configurations for the 'Edit Help' tab
-
             $model = singleton(HelpContentItem::class);
             $gridFieldName = $this->sanitiseClassName($model->ClassName);
             $gridField = $form->Fields()->dataFieldByName($gridFieldName);
@@ -63,7 +64,6 @@ class HelpContentAdmin extends ModelAdmin
                 $config = $gridField->getConfig();
                 $config->addComponent(new GridFieldOrderableRows('SortOrder'));
             }
-
         }
 
         // Return the modified form
