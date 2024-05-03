@@ -17,7 +17,8 @@ use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
 use SilverStripe\Forms\FieldList;
-
+use SilverStripe\Forms\Tab;
+use SilverStripe\Forms\TabSet;
 use SilverStripe\SiteConfig\SiteConfig;
 
 class HelpSidebarExtension extends LeftAndMain
@@ -38,14 +39,34 @@ class HelpSidebarExtension extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null)
     {
-        $fields = FieldList::create();
 
-        $fields->push(LiteralField::create('TestingHelp', "Testing Help!"));
 
+        // Create the main tab set
+        $tabs = TabSet::create(
+            'Root',
+            $tabHelp = Tab::create('Help', LiteralField::create('TestingHelp', 'Testing Help!')),
+            $tabEdit = Tab::create('Edit')
+        );
+
+        // Create a GridField configured to edit HelpContentItem data objects
+        $helpContentItems = DataObject::get('HelpContentItem'); // Ensure your DataObject class name is correct
+        $helpGridFieldConfig = GridFieldConfig_RecordEditor::create();
+        $helpGridField = GridField::create(
+            'HelpContentItems',
+            'Help Content Items',
+            $helpContentItems,
+            $helpGridFieldConfig
+        );
+
+        // Add the GridField to the Edit tab
+        $tabEdit->push($helpGridField);
+
+        // Create the form with these fields
+        $fields = FieldList::create($tabs);
         $form = Form::create(
             $this,
             'EditHelpForm',
-            $fields,
+            $fields
         );
 
         return $form;
