@@ -38,6 +38,11 @@ class HelpSidebarExtension extends LeftAndMain
 
     private static $menu_icon_class = 'font-icon-help-circle';
 
+    // add allowed action
+    private static $allowed_actions = array(
+        'EditHelpForm'
+    );
+
     // private static $tree_class = SiteConfig::class;
 
     private static $required_permission_codes = array('EDIT_SITECONFIG');
