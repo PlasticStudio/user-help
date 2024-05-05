@@ -3,47 +3,53 @@
 namespace PlasticStudio\UserHelp\Tasks;
 
 use SilverStripe\Dev\BuildTask;
-use SilverStripe\Assets\Folder;
-use SilverStripe\Assets\File;
+use SilverStripe\Control\Director;
 use PlasticStudio\UserHelp\DataObjects\HelpContentItem;
-use Parsedown;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Environment\Environment;
 
 class ImportMarkdownDocs extends BuildTask
 {
     protected $title = 'Convert Markdown Files to HelpContentItem Entries';
-
-    protected $description = 'Reads Markdown files from /assets/docs/ and converts them into HelpContentItem dataobjects.';
+    protected $description = 'Reads Markdown files from /app/docs/ and converts them into HelpContentItem dataobjects.';
 
     public function run($request)
     {
-        // Ensure the parsedown library is loaded
-        $parsedown = new Parsedown();
+        // Define the path to the Markdown files relative to the base directory
+        $path = Director::baseFolder() . '/app/docs/';
 
-        // Define the path to the Markdown files
-        $path = ASSETS_PATH . '/docs/';
-        $folder = Folder::find_or_make('/docs');
+        // Ensure the directory exists
+        if (!is_dir($path)) {
+            echo "The directory does not exist.\n";
+            return;
+        }
 
-        // Fetch all Markdown files in the specified directory
-        $files = File::get()->filter([
-            'ParentID' => $folder->ID,
-            'Extension' => 'md'
-        ]);
+        // Initialize the Markdown converter
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $converter = new CommonMarkConverter([], $environment);
 
-        foreach ($files as $file) {
+        // Scan the directory for Markdown files
+        $files = glob($path . '*.md');
+
+        foreach ($files as $filePath) {
+            $fileName = basename($filePath, '.md');
+
             // Read file contents
-            $content = file_get_contents($file->getFullPath());
+            $content = file_get_contents($filePath);
 
             // Convert Markdown content to HTML
-            $htmlContent = $parsedown->text($content);
+            $htmlContent = $converter->convertToHtml($content);
 
             // Create or update the HelpContentItem
-            $helpItem = HelpContentItem::get()->find('HelpTitle', $file->Title) ?: HelpContentItem::create();
-            $helpItem->HelpTitle = $file->Title;
+            $helpItem = HelpContentItem::get()->find('HelpTitle', $fileName) ?: HelpContentItem::create();
+            $helpItem->HelpTitle = $fileName;
             $helpItem->HelpText = $htmlContent;
             $helpItem->FromRepo = true; // assuming all files are from a repository
             $helpItem->write();
 
-            echo "Processed '{$file->Title}' into HelpContentItem.\n";
+            echo "Processed '{$fileName}' into HelpContentItem.\n";
         }
     }
 }
