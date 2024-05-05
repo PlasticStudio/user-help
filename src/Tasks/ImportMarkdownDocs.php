@@ -46,7 +46,7 @@ class ImportMarkdownDocs extends BuildTask
             $helpItem = HelpContentItem::get()->find('HelpTitle', $fileName) ?: HelpContentItem::create();
             $helpItem->HelpTitle = $fileName;
             $helpItem->HelpText = $htmlContent;
-            $helpItem->FromRepo = true; // assuming all files are from a repository
+            $helpItem->FromRepo = true;
             $helpItem->write();
 
             echo "Processed '{$fileName}' into HelpContentItem.\n";
