@@ -49,7 +49,7 @@ class HelpSidebarExtension extends LeftAndMain
 
     // add allowed action
     private static $allowed_actions = array(
-        'handleItem',
+        // 'handleItem',
         'EditHelpForm'
     );
 
