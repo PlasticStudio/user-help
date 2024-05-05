@@ -26,6 +26,15 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldConfig_Base;
 use SilverStripe\Forms\GridField\GridFieldConfig;
 
+// Modeladmin:
+// A: http://localhost/admin/help-content/PlasticStudio-UserHelp-DataObjects-HelpContentItem/EditForm/field/PlasticStudio-UserHelp-DataObjects-HelpContentItem/item/new
+// E: http://localhost/admin/help-content/PlasticStudio-UserHelp-DataObjects-HelpContentItem/EditForm/field/PlasticStudio-UserHelp-DataObjects-HelpContentItem/item/7/edit
+
+
+// LAM:
+// A: http://localhost/admin/help/EditHelpForm/field/HelpContentItems/item/new
+// E: http://localhost/admin/help/EditHelpForm/field/HelpContentItems/item/7/edit
+
 class HelpSidebarExtension extends LeftAndMain
 {
     private static $url_segment = 'help';
@@ -84,7 +93,13 @@ class HelpSidebarExtension extends LeftAndMain
             $this,
             'EditHelpForm',
             $fields
-        );
+        )->setHTMLID('Form_EditForm');
+        $form->addExtraClass('cms-content center cms-edit-form');
+
+		if($form->Fields()->hasTabset()) $form->Fields()->findOrMakeTab('Root')->setTemplate('CMSTabSet');
+		$form->setHTMLID('Form_EditForm');
+		$form->loadDataFrom($moduleManager);
+		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 
         return $form;
     }

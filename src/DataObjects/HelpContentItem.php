@@ -4,6 +4,10 @@ namespace PlasticStudio\UserHelp\DataObjects;
 
 use SilverStripe\ORM\DataObject;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 class HelpContentItem extends DataObject
 {
@@ -46,7 +50,30 @@ class HelpContentItem extends DataObject
             'FromRepo',
         ]);
 
+        // Conditionally set fields as readonly based on the FromRepo value
+        if ($this->FromRepo) {
+            $fields->replaceField('HelpTitle', ReadonlyField::create('HelpTitle'));
+            $fields->replaceField('HelpText', ReadonlyField::create('HelpText', 'Help Text', $this->HelpText)->setRows(8));
+        }
+
         return $fields;
+    }
+
+    // mAKE TITLKE AND CONTENT REQUIRED
+
+    public function validate()
+    {
+        $result = parent::validate();
+
+        if (empty($this->HelpTitle)) {
+            $result->addError('Help Title is required');
+        }
+
+        if (empty($this->HelpText)) {
+            $result->addError('Help Text is required');
+        }
+
+        return $result;
     }
 
     public function getExcerpt()
