@@ -59,12 +59,8 @@ class HelpSidebarExtension extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null)
     {
-        // Create the main tab set
-        $tabs = TabSet::create(
-            'Root',
-            $tabHelp = Tab::create('Help', LiteralField::create('HelpContent', $this->renderAllHelpItems())),
-            $tabEdit = Tab::create('Edit')
-        );
+
+        $fields->addFieldToTab('Root.Help', LiteralField::create('HelpContent', $this->renderAllHelpItems()));
 
         // Create a GridField configured to edit HelpContentItem data objects
         $helpContentItems = HelpContentItem::get();
@@ -76,18 +72,7 @@ class HelpSidebarExtension extends LeftAndMain
             $helpGridFieldConfig
         );
 
-        // Add the GridField to the Edit tab
-        $tabEdit->push($helpGridField);
-
-        // Create the form with these fields
-        $fields = FieldList::create(
-            LiteralField::create(
-                'WrapperStart',
-                '<div class="panel panel--padded panel--scrollable flexbox-area-grow cms-content-fields">'
-            ),
-            $tabs,
-            LiteralField::create('WrapperEnd', '</div>')
-        );
+        $fields->addFieldToTab('Root.Edit', $helpGridField);
 
         $form = Form::create(
             $this,
@@ -96,9 +81,11 @@ class HelpSidebarExtension extends LeftAndMain
         )->setHTMLID('Form_EditForm');
         $form->addExtraClass('cms-content center cms-edit-form');
 
-		if($form->Fields()->hasTabset()) $form->Fields()->findOrMakeTab('Root')->setTemplate('CMSTabSet');
-		$form->setHTMLID('Form_EditForm');
-		$form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
+        if($form->Fields()->hasTabset()) {
+            $form->Fields()->findOrMakeTab('Root')->setTemplate('CMSTabSet');
+        }
+        $form->setHTMLID('Form_EditForm');
+        $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 
         return $form;
     }
