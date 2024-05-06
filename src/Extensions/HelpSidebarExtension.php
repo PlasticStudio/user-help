@@ -59,6 +59,7 @@ class HelpSidebarExtension extends LeftAndMain
 
     public function getEditForm($id = null, $fields = null)
     {
+        $fields = FieldList::create();
 
         $fields->addFieldToTab('Root.Help', LiteralField::create('HelpContent', $this->renderAllHelpItems()));
 
