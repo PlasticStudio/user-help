@@ -6,7 +6,6 @@ use SilverStripe\Dev\BuildTask;
 use SilverStripe\Control\Director;
 use PlasticStudio\UserHelp\DataObjects\HelpContentItem;
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Environment\Environment;
 
 class ImportMarkdownDocs extends BuildTask
@@ -26,9 +25,10 @@ class ImportMarkdownDocs extends BuildTask
         }
 
         // Initialize the Markdown converter
-        $environment = new Environment();
-        $environment->addExtension(new CommonMarkCoreExtension());
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new CommonMarkConverter([
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
 
         // Scan the directory for Markdown files
         $files = glob($path . '*.md');
@@ -42,7 +42,8 @@ class ImportMarkdownDocs extends BuildTask
             $content = file_get_contents($filePath);
 
             // Convert Markdown content to HTML
-            $htmlContent = $converter->convertToHtml($content);
+            $html = $converter->convert($content);
+            $htmlContent = $html->getContent();
 
             // Create or update the HelpContentItem
             $helpItem = HelpContentItem::get()->find('HelpTitle', $fileName) ?: HelpContentItem::create();

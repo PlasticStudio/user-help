@@ -9,6 +9,9 @@ use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
+use SilverStripe\Security\Permission;
+
+
 class HelpContentItem extends DataObject
 {
     private static string $table_name = 'PSHelpContentItem';
