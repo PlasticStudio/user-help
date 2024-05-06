@@ -11,7 +11,6 @@ use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 use SilverStripe\Security\Permission;
 
-
 class HelpContentItem extends DataObject
 {
     private static string $table_name = 'PSHelpContentItem';
@@ -89,5 +88,15 @@ class HelpContentItem extends DataObject
             return mb_strimwidth($text, 0, $length, '...');
         }
         return '';
+    }
+
+    public function canEdit($member = null)
+    {
+        return !$this->FromRepo && Permission::check('CMS_ACCESS', 'any', $member);
+    }
+
+    public function canDelete($member = null)
+    {
+        return !$this->FromRepo && Permission::check('CMS_ACCESS', 'any', $member);
     }
 }
