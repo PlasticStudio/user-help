@@ -90,11 +90,8 @@ class HelpSidebarExtension extends LeftAndMain
         if($form->Fields()->hasTabset()) {
             $form->Fields()->findOrMakeTab('Root');
         }
-        // $form->setHTMLID('Form_EditForm');
-        // $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
-
-
-
+        $form->setHTMLID('Form_EditForm');
+        $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 
         return $form;
     }
