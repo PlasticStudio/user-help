@@ -20,5 +20,5 @@ class HelpContentAdmin extends ModelAdmin
         HelpContentItem::class
     ];
 
-    private static $menu_icon_class = 'font-icon-help-circle';
+    private static $menu_icon_class = 'font-icon-menu-help';
 }

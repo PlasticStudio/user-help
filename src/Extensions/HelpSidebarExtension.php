@@ -30,7 +30,6 @@ use SilverStripe\Forms\GridField\GridFieldConfig;
 // A: http://localhost/admin/help-content/PlasticStudio-UserHelp-DataObjects-HelpContentItem/EditForm/field/PlasticStudio-UserHelp-DataObjects-HelpContentItem/item/new
 // E: http://localhost/admin/help-content/PlasticStudio-UserHelp-DataObjects-HelpContentItem/EditForm/field/PlasticStudio-UserHelp-DataObjects-HelpContentItem/item/7/edit
 
-
 // LAM:
 // A: http://localhost/admin/help/EditHelpForm/field/HelpContentItems/item/new
 // E: http://localhost/admin/help/EditHelpForm/field/HelpContentItems/item/7/edit
@@ -45,7 +44,7 @@ class HelpSidebarExtension extends LeftAndMain
 
     private static $menu_title = 'Help';
 
-    private static $menu_icon_class = 'font-icon-help-circle';
+    private static $menu_icon_class = 'font-icon-menu-help';
 
     // add allowed action
     private static $allowed_actions = array(
