@@ -63,8 +63,8 @@ class HelpSidebarExtension extends LeftAndMain
             $rootTab = new TabSet('Root')
         );
 
-        $rootTab->push(new Tab('Help'));
-        $rootTab->push(new Tab('Edit'));
+        // $rootTab->push(new Tab('Help'));
+        // $rootTab->push(new Tab('Edit'));
 
         $fields->addFieldToTab('Root.Help', LiteralField::create('HelpContent', $this->renderAllHelpItems()));
 
@@ -88,10 +88,13 @@ class HelpSidebarExtension extends LeftAndMain
         $form->addExtraClass('cms-content center cms-edit-form');
 
         if($form->Fields()->hasTabset()) {
-            $form->Fields()->findOrMakeTab('Root')->setTemplate('CMSTabSet');
+            $form->Fields()->findOrMakeTab('Root');
         }
-        $form->setHTMLID('Form_EditForm');
-        $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
+        // $form->setHTMLID('Form_EditForm');
+        // $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
+
+
+
 
         return $form;
     }
