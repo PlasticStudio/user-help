@@ -66,9 +66,6 @@ class HelpSidebarExtension extends LeftAndMain
         // $rootTab->push(new Tab('Help'));
         // $rootTab->push(new Tab('Edit'));
 
-        $fields->createTab('Root.Help', 'Help');
-        $fields->createTab('Root.Edit', 'Edit');
-
         $fields->addFieldToTab('Root.Help', LiteralField::create('HelpContent', $this->renderAllHelpItems()));
 
         // Create a GridField configured to edit HelpContentItem data objects
