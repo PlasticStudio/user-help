@@ -36,6 +36,8 @@ class ImportMarkdownDocs extends BuildTask
         foreach ($files as $filePath) {
             $fileName = basename($filePath, '.md');
 
+            echo "Processing '{$fileName}'...\n";
+
             // Read file contents
             $content = file_get_contents($filePath);
 
